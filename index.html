@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TIDAL</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+  <body>
+    <iframe src="http://listen.tidal.com"></iframe>
+  </body>
+
+  <script>
+  // Get the current window
+// var win = nw.Window.get();
+  // win.showDevTools();
+
+  var option = {
+  key : "MediaNextTrack"
+};
+
+  // Create a shortcut with |option|.
+  var shortcut = new nw.Shortcut({key : "MediaNextTrack"});
+  var shortcut2 = new nw.Shortcut({key : "MediaPlayPause"});
+  var shortcut3 = new nw.Shortcut({key : "MediaPrevTrack"});
+  var shortcut4 = new nw.Shortcut({key : "MediaStop"});
+
+  // Register global desktop shortcut, which can work without focus.
+  nw.App.registerGlobalHotKey(shortcut);
+  nw.App.registerGlobalHotKey(shortcut2);
+  nw.App.registerGlobalHotKey(shortcut3);
+  nw.App.registerGlobalHotKey(shortcut4);
+  </script>
+</html>

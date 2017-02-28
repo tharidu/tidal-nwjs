@@ -1,0 +1,9 @@
+{
+  "name": "Tidal",
+  "main": "index.html",
+  "window":{
+    "min_width":1200,
+    "min_height":800,
+    "icon":"assets/icon.png"
+  }
+}
