@@ -1,32 +1,87 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <title>TIDAL</title>
     <link rel="stylesheet" type="text/css" href="style.css">
-  </head>
-  <body>
+</head>
+
+<body>
     <iframe src="http://listen.tidal.com"></iframe>
-  </body>
+</body>
 
-  <script>
-  // Get the current window
-// var win = nw.Window.get();
-  // win.showDevTools();
+<script>
+    // Get the current window
+    // var win = nw.Window.get()
+    // win.showDevTools()
 
-  var option = {
-  key : "MediaNextTrack"
-};
+    function HandleMediaKey(keyCode) {
+        var doc = document.querySelector("iframe").contentDocument
 
-  // Create a shortcut with |option|.
-  var shortcut = new nw.Shortcut({key : "MediaNextTrack"});
-  var shortcut2 = new nw.Shortcut({key : "MediaPlayPause"});
-  var shortcut3 = new nw.Shortcut({key : "MediaPrevTrack"});
-  var shortcut4 = new nw.Shortcut({key : "MediaStop"});
+        switch (keyCode) {
+            case "MediaPlayPause":
+                if (doc.querySelector(".play-controls__main-button").className.indexOf("playing") == -1) {
+                    doc.querySelector("button.js-play").click();
+                } else {
+                    doc.querySelector("button.js-pause").click();
+                }
 
-  // Register global desktop shortcut, which can work without focus.
-  nw.App.registerGlobalHotKey(shortcut);
-  nw.App.registerGlobalHotKey(shortcut2);
-  nw.App.registerGlobalHotKey(shortcut3);
-  nw.App.registerGlobalHotKey(shortcut4);
-  </script>
+                break;
+            case "MediaPrevTrack":
+                doc.querySelector("button.js-previous").click()
+                break;
+            case "MediaNextTrack":
+                doc.querySelector("button.js-next").click()
+                break;
+            case "MediaStop":
+                doc.querySelector("button.js-pause").click()
+                break;
+        }
+    }
+
+    // Create a shortcut with |option|.
+    var playShortcut = new nw.Shortcut({
+        key: "MediaPlayPause",
+        active: function() {
+            HandleMediaKey("MediaPlayPause")
+        },
+        failed: function(msg) {
+            console.log(msg)
+        }
+    });
+    var nextShortcut = new nw.Shortcut({
+        key: "MediaNextTrack",
+        active: function() {
+            HandleMediaKey("MediaNextTrack")
+        },
+        failed: function(msg) {
+            console.log(msg)
+        }
+    });
+    var prevShortcut = new nw.Shortcut({
+        key: "MediaPrevTrack",
+        active: function() {
+            HandleMediaKey("MediaPrevTrack")
+        },
+        failed: function(msg) {
+            console.log(msg)
+        }
+    });
+    var stopShortcut = new nw.Shortcut({
+        key: "MediaStop",
+        active: function() {
+            HandleMediaKey("MediaStop")
+        },
+        failed: function(msg) {
+            console.log(msg)
+        }
+    });
+
+    // Register global desktop shortcuts for media keys, which can work without focus.
+    nw.App.registerGlobalHotKey(playShortcut)
+    nw.App.registerGlobalHotKey(nextShortcut)
+    nw.App.registerGlobalHotKey(prevShortcut)
+    nw.App.registerGlobalHotKey(stopShortcut)
+</script>
+
 </html>
